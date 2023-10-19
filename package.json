@@ -1,0 +1,17 @@
+{
+  "name": "sdk",
+  "version": "1.0.0",
+  "description": "",
+  "main": "slive.js",
+  "scripts": {
+    "start": "webpack --mode production -w"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "html-webpack-plugin": "^5.5.3",
+    "path": "^0.12.7",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
+  }
+}
