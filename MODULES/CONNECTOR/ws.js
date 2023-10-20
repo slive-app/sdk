@@ -14,6 +14,7 @@ module.exports = BACKEND
 const utils = require('../utils.js')
 const emit = require('../emit.js')
 const cache = require('../cache.js')
+const bodyInjector = require('../bodyInjector.js')
 
 BACKEND.connect = async function (url, version, firstTry) {
     if (!firstTry && !BACKEND.BackendServerWasConnected) return
@@ -24,6 +25,7 @@ BACKEND.connect = async function (url, version, firstTry) {
 
     if (!version) {
         console.error("[Backend] No version specified")
+        bodyInjector.error("No version specified. Exiting...")
         return
     }
 
@@ -77,6 +79,7 @@ BACKEND.connect = async function (url, version, firstTry) {
 
                     if(!cache.localConfig) {
                         alert("[SDK] You have not specified a config for your project. The connection is now closed.")
+                        bodyInjector.error("No config specified. Exiting...")
                         BACKEND.BackendServerWasConnected = false
                         BACKEND.O.close()
                     }
