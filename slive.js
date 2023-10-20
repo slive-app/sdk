@@ -1,4 +1,10 @@
 const utils = require('./MODULES/utils.js')
+const cache = require('./MODULES/cache.js')
+const bodyInjector = require('./MODULES/bodyInjector.js')
+
+// Injecting body
+bodyInjector.set()
+bodyInjector.update()
 
 module.exports = {
     on: require('./MODULES/on.js'),
@@ -7,8 +13,8 @@ module.exports = {
         get: require('./MODULES/DB/get.js'),
     },
     config: {
-        get: require('./MODULES/config/get.js'),
-        // set: require('./MODULES/config/set.js'),
+        get: require('./MODULES/CONFIG/get.js'),
+        set: require('./MODULES/CONFIG/set.js'),
     },
     utils: require('./MODULES/utils.js'),
 }
@@ -18,13 +24,14 @@ console.info("[sliveApp] SDK v1")
 if (utils.getUrlVars().token == undefined) {
     const x = prompt("[SDK] Bitte gib deinen Token ein")
     window.location.href = window.location.href + "?token=" + x
+    if(x == null) {
+        bodyInjector.error("No Token provided. Exiting...")
+    }
 }
 
 if (
     !window.location.hostname.includes("slive.app") &&
-    !window.location.hostname.includes("slive.games") &&
-    utils.getUrlVars().token.toLowerCase().startsWith("t") &&
-    utils.getUrlVars().toolId == undefined
+    !window.location.hostname.includes("slive.games")
 ) {
     console.info("[SDK] Local testing mode")
 }
