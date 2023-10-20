@@ -1,7 +1,7 @@
 // console.log = function () {}
 
 const BACKEND = {
-    start: async (url, version) => BACKEND.connect(url, version, true),
+    start: async (version, url) => BACKEND.connect(version, url, true),
     url: "",
     version: null,
     O: null,
@@ -16,7 +16,7 @@ const emit = require('../emit.js')
 const cache = require('../cache.js')
 const bodyInjector = require('../bodyInjector.js')
 
-BACKEND.connect = async function (url, version, firstTry) {
+BACKEND.connect = async function (version, url, firstTry) {
     if (!firstTry && !BACKEND.BackendServerWasConnected) return
 
     if (!url) {
@@ -73,15 +73,14 @@ BACKEND.connect = async function (url, version, firstTry) {
                 if(BACKEND.firstConfig){
                     BACKEND.firstConfig = false
                     emit("ready", message.DATA)
+                    bodyInjector.show()
                     console.info("[Backend] Connection established")
 
-                    await utils.wait(2000)
+                    await utils.waitMs(2000)
 
                     if(!cache.localConfig) {
                         alert("[SDK] You have not specified a config for your project. The connection is now closed.")
                         bodyInjector.error("No config specified. Exiting...")
-                        BACKEND.BackendServerWasConnected = false
-                        BACKEND.O.close()
                     }
                 }
                 break;
@@ -100,6 +99,16 @@ BACKEND.connect = async function (url, version, firstTry) {
                 if(cache.localConfig.id != message.DATA.toolId) return
                 emit("toolData", message.DATA.payload)
                 break;
+            
+            case "OB2OF_DB_GET_RESPONSE": {
+                cache.db[message.DATA.nonce] = message.DATA
+                break;
+            }
+
+            case "OB2OF_DB_SET_RESPONSE": {
+                cache.db[message.DATA.nonce] = message.DATA
+                break;
+            }
         }
     }
 
@@ -110,7 +119,7 @@ BACKEND.connect = async function (url, version, firstTry) {
 
     BACKEND.O.onclose = async function () {
         console.error("[Backend] Connection closed")
-        await utils.wait(5000)
-        BACKEND.connect(BACKEND.url, BACKEND.version, false)
+        await utils.waitMs(5000)
+        BACKEND.connect(BACKEND.version, BACKEND.url, false)
     }
 }

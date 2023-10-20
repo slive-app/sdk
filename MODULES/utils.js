@@ -1,5 +1,7 @@
+const cache = require('./cache.js')
+
 module.exports = {
-    
+
     IsJsonString: (str) => {
         try {
             JSON.parse(str);
@@ -59,7 +61,7 @@ module.exports = {
         return vars;
     },
 
-    wait: (ms) => {
+    waitMs: (ms) => {
         return new Promise(resolve => setTimeout(resolve, ms));
     },
 
@@ -70,5 +72,5 @@ module.exports = {
             color += letters[Math.floor(Math.random() * 16)];
         }
         return color;
-    }
+    },
 }

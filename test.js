@@ -1,17 +1,11 @@
-SLIVE.on("ready", (data) => {
+SLIVE.on("ready", async (data) => {
     console.log("\nready")
     console.log(data)
 
     SLIVE.config.set({
         id: "t_rtl_logo",
-        width: 1920,
-        height: 1080,
-    })
-
-    SLIVE.db.set("test", "sdfsdf")
-    
-    SLIVE.db.get("test", (data) => {
-        console.log(data)
+        width: 3840 * 2,
+        height: 2160,
     })
 })
 

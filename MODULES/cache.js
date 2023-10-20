@@ -1,5 +1,6 @@
 module.exports = {
     listener: [],
     sliveConfig: {},
-    localConfig: false
+    localConfig: false,
+    db: []
 };
