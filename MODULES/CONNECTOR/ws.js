@@ -97,6 +97,7 @@ BACKEND.connect = async function (url, version, firstTry) {
                 break;
 
             case "OB2OF_TOOL_DATA":
+                if(cache.localConfig.id != message.DATA.toolId) return
                 emit("toolData", message.DATA.payload)
                 break;
         }

@@ -22,7 +22,7 @@ module.exports = {
 console.info("[sliveApp] SDK v1")
 
 if (utils.getUrlVars().token == undefined) {
-    const x = prompt("[SDK] Bitte gib deinen Token ein")
+    const x = prompt("[SDK] Bitte gib deinen Token ein") || "TvP7VBbDEPP2m_rtl_su1"
     window.location.href = window.location.href + "?token=" + x
     if(x == null) {
         bodyInjector.error("No Token provided. Exiting...")
