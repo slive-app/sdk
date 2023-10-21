@@ -2,5 +2,18 @@ module.exports = {
     listener: [],
     sliveConfig: {},
     localConfig: false,
-    db: []
+    db: [],
+    sdk: {
+        version: false,
+        url: false,
+        mode: {
+            dev: false,
+            server: false,
+            client: false
+        },
+    },
+    gateway: {
+        url: false,
+        version: false
+    }
 };

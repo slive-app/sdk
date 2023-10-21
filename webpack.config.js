@@ -1,7 +1,7 @@
 var path = require('path');
 let webpack = require('webpack');
 
-module.exports = {
+module.exports = [{
   entry: './slive.js',
   output: {
     path: path.resolve(__dirname),
@@ -9,4 +9,22 @@ module.exports = {
     library: 'SLIVE',
     libraryTarget: 'var',
   }
-};
+},
+{
+  entry: './slive.js',
+  output: {
+    path: path.resolve(__dirname, 'server'),
+    filename: '_sliveBundle.js',
+    library: 'SLIVE',
+    libraryTarget: 'var',
+  }
+},
+{
+  entry: './slive.js',
+  output: {
+    path: path.resolve(__dirname, 'server/client'),
+    filename: '_sliveBundle.js',
+    library: 'SLIVE',
+    libraryTarget: 'var',
+  }
+}];

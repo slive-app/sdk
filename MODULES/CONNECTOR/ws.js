@@ -1,38 +1,36 @@
-// console.log = function () {}
-
-const BACKEND = {
-    start: async (version, url) => BACKEND.connect(version, url, true),
-    url: "",
-    version: null,
-    O: null,
-    firstConfig: true,
-    BackendServerWasConnected: false,
-}
-
-module.exports = BACKEND
-
+console.log = function () {}
 const utils = require('../utils.js')
 const emit = require('../emit.js')
 const cache = require('../cache.js')
 const bodyInjector = require('../bodyInjector.js')
 
-BACKEND.connect = async function (version, url, firstTry) {
+
+const BACKEND = {
+    start: async () => BACKEND.connect(true),
+    O: null,
+    firstConfig: true,
+    BackendServerWasConnected: false
+}
+
+
+
+
+
+
+BACKEND.connect = async function (firstTry) {
     if (!firstTry && !BACKEND.BackendServerWasConnected) return
 
-    if (!url) {
-        url = "wss://ws.slive.app/slive_app_backend_overlay"
+    if (!cache.gateway.url) {
+        cache.gateway.url = "wss://ws.slive.app/slive_app_backend_overlay"
     }
 
-    if (!version) {
-        console.error("[Backend] No version specified")
+    if (!cache.gateway.version) {
+        console.error("[sliveApp] No Gateway Version specified")
         bodyInjector.error("No version specified. Exiting...")
         return
     }
 
-    BACKEND.url = url
-    BACKEND.version = version
-
-    BACKEND.O = new WebSocket(`${url}?version=${version}&token=${utils.getUrlVars().token}`)
+    BACKEND.O = new WebSocket(`${cache.gateway.url}?version=${cache.gateway.version}&token=${utils.getUrlVars().token}`)
 
     // WS: Bei neuer Nachricht
     BACKEND.O.onmessage = async function (message) {
@@ -47,7 +45,7 @@ BACKEND.connect = async function (version, url, firstTry) {
 
             // Bei Error vom Backend
             case "ERROR":
-                console.error("[Backend] " + message)
+                console.error("[sliveApp] " + message)
                 break
 
                 // Backend fragt freundlich nach, ob wir noch leben
@@ -70,16 +68,28 @@ BACKEND.connect = async function (version, url, firstTry) {
                 // Setze die Config
                 cache.sliveConfig = message.DATA
 
-                if(BACKEND.firstConfig){
+                if (BACKEND.firstConfig) {
                     BACKEND.firstConfig = false
                     emit("ready", message.DATA)
-                    bodyInjector.show()
-                    console.info("[Backend] Connection established")
+
+                    if (cache.sdk.mode.server) {
+                        if (cache.sliveConfig.overlay.selectedId) {
+                            bodyInjector.loadModule(cache.sliveConfig.overlay.selectedId)
+                        } else {
+                            for (const id of cache.sliveConfig.overlay.selectedIds) {
+                                bodyInjector.loadModule(id)
+                            }
+                        }
+                    }
+
+                    console.info(`[sliveApp] Connection to Gateway v${cache.gateway.version} established`)
 
                     await utils.waitMs(2000)
 
-                    if(!cache.localConfig) {
+                    if (!cache.localConfig && cache.sdk.mode.dev) {
                         alert("[SDK] You have not specified a config for your project. The connection is now closed.")
+                        BACKEND.BackendServerWasConnected = false
+                        BACKEND.O.close()
                         bodyInjector.error("No config specified. Exiting...")
                     }
                 }
@@ -96,10 +106,9 @@ BACKEND.connect = async function (version, url, firstTry) {
                 break;
 
             case "OB2OF_TOOL_DATA":
-                if(cache.localConfig.id != message.DATA.toolId) return
-                emit("toolData", message.DATA.payload)
+                emit("toolData", message.DATA)
                 break;
-            
+
             case "OB2OF_DB_GET_RESPONSE": {
                 cache.db[message.DATA.nonce] = message.DATA
                 break;
@@ -113,13 +122,16 @@ BACKEND.connect = async function (version, url, firstTry) {
     }
 
     BACKEND.O.onerror = function (error) {
-        console.error("[Backend] " + JSON.stringify(error))
+        console.error("[sliveApp] " + JSON.stringify(error))
         BACKEND.O.close()
     }
 
     BACKEND.O.onclose = async function () {
-        console.error("[Backend] Connection closed")
+        console.error("[sliveApp] Gateway Connection closed")
         await utils.waitMs(5000)
-        BACKEND.connect(BACKEND.version, BACKEND.url, false)
+        BACKEND.connect(false)
     }
 }
+
+
+module.exports = BACKEND

@@ -1,10 +1,11 @@
 const cache = require('./cache.js')
-const BACKEND = require("./CONNECTOR/ws.js")
+const utils = require('./utils.js');
+const configSet = require('./CONFIG/set.js');
 
 module.exports = {
     set: () => {
-        document.body.style.width = "1920px";
-        document.body.style.height = "1080px";
+        document.body.style.width = "500px";
+        document.body.style.height = "200px";
         document.body.style.transform = "scale(1)";
         document.body.style.transformOrigin = "0 0";
         document.body.style.overflow = "hidden";
@@ -19,7 +20,35 @@ module.exports = {
         // Automatische Skalierung auf die Bildschirmgröße
         setInterval(() => {
 
-            if (!cache.localConfig) return;
+            if (cache.sdk.mode.server) {
+                if (!cache.localConfig) {
+                    configSet({
+                        width: 1920,
+                        height: 1080
+                    })
+                } else {
+                    for (let child of document.body.children) {
+                        if (child.tagName != "IFRAME") continue
+                        let x = {}
+
+                        if (child.contentWindow.document.body.offsetWidth > cache.localConfig.width) {
+                            x.width = child.contentWindow.document.body.offsetWidth
+                        } 
+                        
+                        if (child.contentWindow.document.body.offsetHeight > cache.localConfig.height) {
+                            x.height = child.contentWindow.document.body.offsetHeight
+                        }
+
+                        if (x.width || x.height) {
+                            configSet(x)
+                        }
+                    }
+                }
+            }
+
+            if (!cache.localConfig) {
+                return
+            }
 
             let zoom = null;
             if (cache.localConfig.width >= cache.localConfig.height) {
@@ -35,8 +64,6 @@ module.exports = {
         }, 500)
     },
     error: (msg) => {
-        BACKEND.BackendServerWasConnected = false
-        BACKEND.O.close()
         document.body.innerHTML = `<div style="position: absolute; top: 5%; left: 3%; width: 90%; color: #759aff; font-family: Arial; font-size: 30px; text-align: left;">${msg}</div>`
     },
     show: () => {
@@ -44,5 +71,27 @@ module.exports = {
     },
     hide: () => {
         document.body.style.opacity = "0";
+    },
+    loadModule: async (id) => {
+        // generate iframe
+        let iframe = document.createElement("iframe")
+        iframe.src = `http://127.0.0.1:5500/server/client`
+        iframe.style.width = "100%"
+        iframe.style.height = "100%"
+        iframe.style.border = "none"
+        iframe.style.position = "absolute"
+        iframe.style.top = "0"
+        iframe.style.left = "0"
+        iframe.style.overflow = "hidden"
+        iframe.style.opacity = "1"
+        iframe.style.transition = "opacity 0.49s cubic-bezier(.72,.01,.23,.99)"
+        iframe.style.pointerEvents = "none"
+
+        document.body.appendChild(iframe)
+
+        await utils.waitMs(500)
+
+        iframe.contentWindow.SLIVE.emit("ready", cache.sliveConfig)
+
     }
 }
