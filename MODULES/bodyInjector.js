@@ -75,7 +75,7 @@ module.exports = {
     loadModule: async (id) => {
         // generate iframe
         let iframe = document.createElement("iframe")
-        iframe.src = `http://127.0.0.1:5500/server/client`
+        iframe.src = `https://module.slive.app/${id}`
         iframe.style.width = "100%"
         iframe.style.height = "100%"
         iframe.style.border = "none"

@@ -14,7 +14,7 @@ bodyInjector.update()
 
 
 if (
-    window.location.href.includes("5500/index")
+    !window.location.hostname.includes("slive.app")
 ) {
     sdkmode.dev()
 } else if (
@@ -34,7 +34,7 @@ if (
     utils.getUrlVars().token == undefined &&
     cache.sdk.mode.dev
 ) {
-    const x = prompt("[SDK] Bitte gib deinen Token ein") || "TvP7VBbDEPP2m_rtl_su1"
+    const x = prompt("[SDK] Bitte gib deinen Token ein")
     window.location.href = window.location.href + "?token=" + x
     if (x == null) {
         bodyInjector.error("No Token provided. Exiting...")
