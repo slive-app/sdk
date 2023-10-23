@@ -1,10 +1,10 @@
 # sliveApp-SDK
 The official SDK of slive.app! Develop your own overlays and share them with the rest of the world
-- [CDN](?readme=1#cdn)
-- [Config](?readme=1#config)
-- [Events](?readme=1#events)
-- [Database](?readme=1#database)
-- [Utils](?readme=1#utils)
+- [CDN](#cdn)
+- [Config](#config)
+- [Events](#events)
+- [Database](#database)
+- [Utils](#utils)
 
 # CDN
 ### Stable
