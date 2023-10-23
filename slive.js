@@ -3,9 +3,12 @@ const cache = require('./MODULES/cache.js')
 const bodyInjector = require('./MODULES/bodyInjector.js')
 const sdkmode = require('./MODULES/sdkmode.js')
 
-cache.gateway.url = "wss://ws.slive.app/slive_app_backend_overlay_beta"
-cache.gateway.version = 1
+
+cache.sdk.beta = true
 cache.sdk.version = 1
+cache.gateway.version = 1
+cache.gateway.url = "wss://ws.slive.app/slive_app_backend_overlay" + (cache.sdk.beta ? "_beta" : "")
+
 
 
 // Injecting body
@@ -14,7 +17,7 @@ bodyInjector.update()
 
 
 if (
-    !window.location.hostname.includes("slive.app")
+    !window.location.hostname.includes(cache.sdk.beta ? "beta.slive.app" : "slive.app")
 ) {
     sdkmode.dev()
 } else if (

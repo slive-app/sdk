@@ -11,6 +11,7 @@ module.exports = {
             server: false,
             client: false
         },
+        beta: false
     },
     gateway: {
         url: false,

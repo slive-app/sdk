@@ -20,10 +20,6 @@ const BACKEND = {
 BACKEND.connect = async function (firstTry) {
     if (!firstTry && !BACKEND.BackendServerWasConnected) return
 
-    if (!cache.gateway.url) {
-        cache.gateway.url = "wss://ws.slive.app/slive_app_backend_overlay"
-    }
-
     if (!cache.gateway.version) {
         console.error("[sliveApp] No Gateway Version specified")
         bodyInjector.error("No version specified. Exiting...")
