@@ -26,7 +26,8 @@ if (
 ) {
     sdkmode.server()
 } else if (
-    window.parent.document.SLIVESERVER
+    window.parent.document.SLIVESERVER || 
+    window.location.pathname.includes("/module")
 ) {
     sdkmode.module()
 }
