@@ -21,7 +21,8 @@ if (
 ) {
     sdkmode.dev()
 } else if (
-    !window.parent.document.SLIVESERVER
+    !window.parent.document.SLIVESERVER &&
+    window.location.pathname.includes("/overlay")
 ) {
     sdkmode.server()
 } else if (

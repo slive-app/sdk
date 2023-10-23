@@ -17,6 +17,11 @@ module.exports = {
         ws.start()
     },
     module: () => {
+        if(window == window.top) {
+            document.location.href = `https://${cache.sdk.beta ? "beta." : ""}slive.app`
+            return
+        }
+
         console.warn(`[sliveApp] SDK v${cache.sdk.version} - Module Mode`)
         cache.sdk.mode.module = true
     }
