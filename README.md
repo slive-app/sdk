@@ -8,14 +8,14 @@ The official SDK of slive.app! Develop your own overlays and share them with the
 
 # CDN
 ### Stable
-Du findest die neuste Version unserer SDK hier:
+You can find the latest version of our SDK here:
 ```
 https://cdn.jsdelivr.net/gh/slive-app/sdk@v1.1/_sliveBundle.js
 ```
-Die Versionsnummer setzt sich zusammen aus der SDK-Version und der Gateway-Version. 
+The version number is composed of the SDK version and the gateway version. 
 
 ### Beta
-Diese Versionen verbinden sich mit dem Beta-Gateway. Um dieses nutzen zu können, wird ein anderer Token benötigt.  
+These versions connect to the beta gateway. A different token is required to use this.  
 
 
 # Config
@@ -28,27 +28,24 @@ SLIVE.config.set({
 })
 ```
 
-Diese Config wird genutzt, damit slive dein Overlay richtig nutzen kann. 
-Wenn diese Funktion nicht innerhalb von 2 Sekunden nach dem `ready`-Event ausgeführt wird, wird die Verbindung zum Gateway geschlossen.
+This config is used so that slive can use your overlay properly. If this function is not executed within 2 seconds after the `ready` event, the connection to the gateway will be closed.
 
 
 # Events
 ```js
 SLIVE.on("", async (data) => {})
 ```
-sliveApp bietet eine Vielzahl an Events, welche das Overlay nutzen kann.
-Aktuell möglich:
+sliveApp offers a variety of events that the overlay can use. Currently possible:
 - ready
 - chat
 - event
 - toolData
 
 ## on.ready 
-Wird abgefeuert, sobald erfolgreich eine Verbindung Gateway hergestellt wurde.
-Ab hier solltest du mit deinem Code anfangen. Nachdem du alles vorbereitet hast, rufe `SLIVE.ready()` auf. Damit signalisierst du, dass du alles geladen hast. Dein Overlay wird daraufhin angezeigt.
+Fired when a connection gateway is successfully established. From here you should start with your code. After you have prepared everything, call `SLIVE.ready()`. This signals that you have loaded everything. Your overlay will be displayed.
 
 ## on.chat
-Bei jeder neuen Chatnachricht erhältst du alle relevanten Chat-Daten:
+With each new chat message you will receive all relevant chat data:
 ```json
 {
         "badge-info": "subscriber/57",
@@ -76,7 +73,7 @@ Bei jeder neuen Chatnachricht erhältst du alle relevanten Chat-Daten:
 ```
 
 ## on.event
-Dieses Event wird abgefeuert, sobald ein Twitch-Event stattgefunden hat:
+This event is fired as soon as a Twitch event has taken place:
 ```json
 {
         "subscription": {
@@ -93,7 +90,7 @@ Dieses Event wird abgefeuert, sobald ein Twitch-Event stattgefunden hat:
             "broadcaster_user_login": "thejocraft_live",
             "broadcaster_user_name": "thejocraft_live",
             "message": {
-                "text": "Wusstest du, dass man einen Netherstern mit einem Eimer Wasser fangen kann? Nein? Kein Wunder denn dieser Fakt wurde Ihnen präsentiert von: Google Bard.",
+                "text": "Did you know that you can catch a Nether Star with a bucket of water? No? No wonder because this fact was presented to you by: Google Bard.",
                 "emotes": null
             },
             "tier": "1000",
@@ -104,33 +101,30 @@ Dieses Event wird abgefeuert, sobald ein Twitch-Event stattgefunden hat:
     }
 ```
 
-Wenn du auf ein speziefischesch Event hören möchtest, kannst du einfach den Type als Listener angeben: `SLIVE.on("channel.subscription.message", async (data) => {})`
-Mehr Informationen findest du auf https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/
+If you want to listen to a special fish event, you can simply specify the type as listener: `SLIVE.on("channel.subscription.message", async (data) => {})` More information can be found at https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/
 
 ## on.toolData
-Wird momentan nur Intern genutzt
+Currently only used internally
 
 # Database
-Wir erlauben euch Entwicklern, Daten für einen bestimmten Zeitraum in unserer Datenbank abzuspeichern. 
-Dies erledigt ihr mit
+We allow you developers to store data in our database for a certain period of time. You do this with
 ```
-// Einen Wert setzen
+// Set a value
 SLIVE.db.set(key, value)
 
-// Einen Wert erhalten
+// Get a value
 let value = await SLIVE.db.get(key)
 ```
-Diese Daten werden getrennt nach User und OverlayID abgespeichert.
-Wenn ihr auf die Variabeln anderer Tools/Games zugreifen wollt, gebt als Key die ID des jeweiligen Overlays an und dahinter den Namen der Variabel getrennt mit einem `:`
+This data is stored separately for User and OverlayID. If you want to access the variables of other tools/games, enter the ID of the respective overlay as key and behind it the name of the variable separated with a `:`.
 
-### Beispiel:
-Wir befinden uns im Spiel mit der ID `g1`
-- `key1` - Wir ändern den Value des Keys `key1` für `g1`
-- `g2:key1` - Wir ändern den Value des Keys `key1` für `g2` 
+### Example:
+We are in the game with the ID `g1`
+- `key1` - We change the value of the key `key1` for `g1`
+- `g2:key1` - We change the value of the key `key1` for `g2`.
 
 
 # Utils
-Wir haben mehrere Tools für euch in der SDK, mit der ihr euch das Leben etwas leichter macht. Diese Liste wird stetig mit neuen Functions gefüllt. Ebenfalls könnt ihr diese Liste mit euren eigenen Ideen füllen. Erstellt dafür einfach einen Pull Request.
+We have several tools for you in the SDK, with which you can make your life a little easier. This list will be constantly filled with new functions. You can also fill this list with your own ideas. Just create a pull request.
 
 - IsJsonString(json)
 - rdmNum(min, max)
