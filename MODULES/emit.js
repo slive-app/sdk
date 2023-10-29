@@ -10,10 +10,12 @@ module.exports = (event, data) => {
     // Check, ob die ToolID mit der hinterlegten ID übereinstimmt
     if (event == "toolData" && data.toolId && (data.toolId != cache.localConfig.id)) {
       return;
-    } else {
+    } else if(event == "toolData" && data.toolId && (data.toolId == cache.localConfig.id)) {
       data = data.payload
+    } else if(event == "ready") {
+      cache.sliveConfig = data
     }
-
+    
 
     // Rufe alle Listener des Ereignisses auf
     cache.listener[event].forEach((listener) => listener(data));

@@ -66,7 +66,7 @@ BACKEND.connect = async function (firstTry) {
 
                 if (BACKEND.firstConfig) {
                     BACKEND.firstConfig = false
-                    emit("ready", message.DATA)
+                    emit("ready", cache.sliveConfig)
 
                     if (cache.sdk.mode.server) {
                         if (cache.sliveConfig.overlay.selectedId) {

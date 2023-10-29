@@ -6,28 +6,25 @@ const cache = require('../cache.js')
 module.exports = (key, value) => {
     return new Promise(async (resolve, reject) => {
 
-        const nonce = utils.rdmStrNum(16)
-
-        BACKEND.O.send(JSON.stringify({
-            ID: "OF2OB_DB_SET",
-            DATA: {
+        console.log(cache.sliveConfig.api.token)
+        const options = {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + cache.sliveConfig.api.token
+            },
+            body: JSON.stringify({
+                id: cache.localConfig.id,
                 key: key,
-                value: value,
-                nonce: nonce
-            }
-        }))
+                value: value
+            }),
+        };
 
-        while(cache.db[nonce] == undefined) {
-            await utils.waitMs(1)
-        }
-        let data = await cache.db[nonce]
-        delete cache.db[nonce]
-        delete data.nonce
-        if(data.success) {
-            resolve()
-        } else {
-            reject("Error while setting value")
-        }
-        
-    })
+        fetch(`${cache.sliveConfig.api.host}/me/database`, options)
+            .then(response => response.json())
+            .then(response => {
+                resolve(response.data.value)
+            })
+            .catch(err => reject(err));
+    });
 }

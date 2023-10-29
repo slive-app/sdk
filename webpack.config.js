@@ -13,7 +13,7 @@ module.exports = [{
 {
   entry: './slive.js',
   output: {
-    path: path.resolve(__dirname, 'server'),
+    path: path.resolve(__dirname, 'overlay'),
     filename: '_sliveBundle.js',
     library: 'SLIVE',
     libraryTarget: 'var',
@@ -22,7 +22,7 @@ module.exports = [{
 {
   entry: './slive.js',
   output: {
-    path: path.resolve(__dirname, 'server/client'),
+    path: path.resolve(__dirname, 'overlay/module'),
     filename: '_sliveBundle.js',
     library: 'SLIVE',
     libraryTarget: 'var',

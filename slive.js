@@ -8,6 +8,7 @@ cache.sdk.beta = true
 cache.sdk.version = 1
 cache.gateway.version = 1
 cache.gateway.url = "wss://ws.slive.app/slive_app_backend_overlay" + (cache.sdk.beta ? "_beta" : "")
+cache.sdk.local = true
 
 
 
@@ -16,8 +17,9 @@ bodyInjector.set()
 bodyInjector.update()
 
 
+
 if (
-    !window.location.hostname.includes(cache.sdk.beta ? "beta.slive.app" : "slive.app")
+    !window.location.hostname.includes(cache.sdk.beta ? "beta.slive.app" : "slive.app") && !cache.sdk.local
 ) {
     sdkmode.dev()
 } else if (
@@ -26,11 +28,13 @@ if (
 ) {
     sdkmode.server()
 } else if (
-    window.parent.document.SLIVESERVER || 
+    window.parent.document.SLIVESERVER ||
     window.location.pathname.includes("/module")
 ) {
     sdkmode.module()
 }
+
+
 
 
 

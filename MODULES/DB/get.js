@@ -3,30 +3,22 @@ const utils = require('../utils.js')
 const cache = require('../cache.js')
 
 
-module.exports = (key, value) => {
+module.exports = (key) => {
     return new Promise(async (resolve, reject) => {
-
-        const nonce = utils.rdmStrNum(16)
-
-        BACKEND.O.send(JSON.stringify({
-            ID: "OF2OB_DB_GET",
-            DATA: {
-                key: key,
-                nonce: nonce
+        console.log(cache.sliveConfig.api.token)
+        const options = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + cache.sliveConfig.api.token
             }
-        }))
+        };
 
-
-
-        while(cache.db[nonce] == undefined) {
-            await utils.waitMs(1)
-        }
-        let data = await cache.db[nonce]
-        delete cache.db[nonce]
-        if(data.success) {
-            resolve(data.value)
-        } else {
-            reject("Error while getting value")
-        }
-    })
+        fetch(`${cache.sliveConfig.api.host}/me/database?id=${cache.localConfig.id}&key=${key}`, options)
+            .then(response => response.json())
+            .then(response => {
+                resolve(response.data.value)
+            })
+            .catch(err => reject(err));
+    });
 }
