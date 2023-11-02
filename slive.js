@@ -8,7 +8,7 @@ cache.sdk.beta = true
 cache.sdk.version = 1
 cache.gateway.version = 1
 cache.gateway.url = "wss://ws.slive.app/slive_app_backend_overlay" + (cache.sdk.beta ? "_beta" : "")
-cache.sdk.local = true
+// cache.sdk.local = true
 
 
 
