@@ -17,7 +17,7 @@ module.exports = (key) => {
         fetch(`${cache.sliveConfig.api.host}/me/database?id=${cache.localConfig.id}&key=${key}`, options)
             .then(response => response.json())
             .then(response => {
-                resolve(response.data.value)
+                resolve(response.data.value);
             })
             .catch(err => reject(err));
     });

@@ -3,9 +3,9 @@ SLIVE.on("ready", async (data) => {
     console.log(data)
 
     SLIVE.config.set({
-        id: "t_rtl_logo",
-        width: 3840 * 2,
-        height: 2160,
+        id: "appId",
+        width: 1920,
+        height: 1080
     })
 })
 
