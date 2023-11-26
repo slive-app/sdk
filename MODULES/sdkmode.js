@@ -1,6 +1,6 @@
 const bodyInjector = require('./bodyInjector.js')
 const cache = require('./cache.js')
-const ws = require('./CONNECTOR/ws.js')
+const ws = require('./CONNECTOR/overlay.js')
 
 
 module.exports = {

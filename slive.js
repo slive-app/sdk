@@ -6,8 +6,10 @@ const sdkmode = require('./MODULES/sdkmode.js')
 
 cache.sdk.beta = true
 cache.sdk.version = 1
-cache.gateway.version = 1
-cache.gateway.url = "wss://ws.slive.app/slive_app_backend_overlay" + (cache.sdk.beta ? "_beta" : "")
+cache.gateway.overlay.version = 1
+cache.gateway.overlay.url = "wss://ws.slive.app/slive_app_backend_overlay" + (cache.sdk.beta ? "_beta" : "")
+cache.gateway.dashboard.version = 1
+cache.gateway.dashboard.url = "wss://ws.slive.app/slive_app_backend_panel" + (cache.sdk.beta ? "_beta" : "")
 // cache.sdk.local = true
 
 
@@ -15,18 +17,6 @@ cache.gateway.url = "wss://ws.slive.app/slive_app_backend_overlay" + (cache.sdk.
 // Injecting body
 bodyInjector.set()
 bodyInjector.update()
-
-// const { WebSocketServer } = require('ws');
-
-// const wss = new WebSocketServer({ port: 8080 });
-
-// wss.on('connection', function connection(ws) {
-//   ws.on('message', function message(data) {
-//     console.log('received: %s', data);
-//   });
-
-//   ws.send('something');
-// });
 
 
 if (
@@ -51,7 +41,7 @@ if (
 
 // Check if token is provided
 if (
-    utils.getUrlVars().token == undefined &&
+    (utils.getUrlVars().token == undefined || utils.getUrlVars().token == null) &&
     cache.sdk.mode.dev
 ) {
     const x = prompt("[SDK] Bitte gib deinen Token ein")
@@ -71,6 +61,9 @@ const exportSlive = {
     config: {
         get: require('./MODULES/CONFIG/get.js'),
         set: require('./MODULES/CONFIG/set.js'),
+    },
+    controller: {
+        set: require('./MODULES/CONTROLLER/set.js'),
     },
     utils: require('./MODULES/utils.js'),
     ready: require('./MODULES/ready.js'),

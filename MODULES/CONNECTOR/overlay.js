@@ -1,4 +1,3 @@
-console.log = function () {}
 const utils = require('../utils.js')
 const emit = require('../emit.js')
 const cache = require('../cache.js')
@@ -20,13 +19,13 @@ const BACKEND = {
 BACKEND.connect = async function (firstTry) {
     if (!firstTry && !BACKEND.BackendServerWasConnected) return
 
-    if (!cache.gateway.version) {
+    if (!cache.gateway.overlay.version) {
         console.error("[sliveApp] No Gateway Version specified")
         bodyInjector.error("No version specified. Exiting...")
         return
     }
 
-    BACKEND.O = new WebSocket(`${cache.gateway.url}?version=${cache.gateway.version}&token=${utils.getUrlVars().token}`)
+    BACKEND.O = new WebSocket(`${cache.gateway.overlay.url}?version=${cache.gateway.overlay.version}&token=${utils.getUrlVars().token}`)
 
     // WS: Bei neuer Nachricht
     BACKEND.O.onmessage = async function (message) {
@@ -34,7 +33,7 @@ BACKEND.connect = async function (firstTry) {
         message = JSON.parse(message.data)
 
         // Gebe Nachricht aus
-        if (message.ID != "ERROR") console.log(message)
+        if (message.ID != "ERROR" && cache.sdk.local) console.log(message)
 
         // Sortiere Nachricht nach Typ
         switch (message.ID) {
@@ -78,7 +77,7 @@ BACKEND.connect = async function (firstTry) {
                         }
                     }
 
-                    console.info(`[sliveApp] Connection to Gateway v${cache.gateway.version} established`)
+                    console.info(`[sliveApp] [OB] Connection to Gateway v${cache.gateway.overlay.version} established`)
 
                     await utils.waitMs(2000)
 

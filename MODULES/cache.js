@@ -3,6 +3,7 @@ module.exports = {
     sliveConfig: {},
     localConfig: false,
     db: [],
+    controller: false,
     sdk: {
         version: false,
         url: false,
@@ -14,7 +15,13 @@ module.exports = {
         beta: false
     },
     gateway: {
-        url: false,
-        version: false
+        overlay: {
+            version: false,
+            url: false
+        },
+        dashboard: {
+            version: false,
+            url: false
+        },
     }
 };

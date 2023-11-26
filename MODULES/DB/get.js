@@ -1,11 +1,10 @@
-const BACKEND = require("../CONNECTOR/ws.js")
+const BACKEND = require("../CONNECTOR/overlay.js")
 const utils = require('../utils.js')
 const cache = require('../cache.js')
 
 
 module.exports = (key) => {
     return new Promise(async (resolve, reject) => {
-        console.log(cache.sliveConfig.api.token)
         const options = {
             method: 'GET',
             headers: {
