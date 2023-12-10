@@ -12,9 +12,10 @@ module.exports = {
         document.body.style.position = "absolute";
         document.body.style.top = "0";
         document.body.style.left = "0";
-        document.body.style.transition = "transform 0.49s cubic-bezier(.72,.01,.23,.99); opacity 0.49s cubic-bezier(.72,.01,.23,.99)";
-        document.body.style.margin = "0";
         document.body.style.opacity = "0";
+        document.body.style.transition = "transform 0.49s cubic-bezier(.72,.01,.23,.99), opacity 0.49s cubic-bezier(.72,.01,.23,.99)";
+        document.body.style.margin = "0";
+        
     },
     update: () => {
         // Automatische Skalierung auf die Bildschirmgröße
@@ -59,7 +60,6 @@ module.exports = {
                 return;
             }
 
-            document.body.style.transition = "transform 0.49s cubic-bezier(.72,.01,.23,.99)"
             document.body.style.transform = `scale(${zoom.toString()})`
         }, 500)
     },
