@@ -57,6 +57,7 @@ const exportSlive = {
     db: {
         set: require('./MODULES/DB/set.js'),
         get: require('./MODULES/DB/get.js'),
+        events: require('./MODULES/DB/events.js'),
     },
     config: {
         get: require('./MODULES/CONFIG/get.js'),
