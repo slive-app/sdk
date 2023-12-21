@@ -113,6 +113,11 @@ BACKEND.connect = async function (firstTry) {
                 cache.db[message.DATA.nonce] = message.DATA
                 break;
             }
+
+            case "OB2OF_RELOAD": {
+                location.reload()
+                break;
+            }
         }
     }
 

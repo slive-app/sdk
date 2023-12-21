@@ -2,6 +2,9 @@ const cache = require('../cache.js')
 
 module.exports = () => {
     return new Promise(async (resolve, reject) => {
+
+        console.log("Getting Events")
+        console.log(cache.sliveConfig)
         const options = {
             method: 'GET',
             headers: {
