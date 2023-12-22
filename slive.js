@@ -66,6 +66,11 @@ const exportSlive = {
     controller: {
         set: require('./MODULES/CONTROLLER/set.js'),
     },
+    twitch: {
+        api: {
+            get: require('./MODULES/TWITCH/API/get.js'),
+        },
+    },
     utils: require('./MODULES/utils.js'),
     ready: require('./MODULES/ready.js'),
 }
