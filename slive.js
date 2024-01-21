@@ -60,6 +60,7 @@ const exportSlive = {
     },
     live: {
         events: require('./MODULES/LIVE/events.js'),
+        stream: require('./MODULES/LIVE/stream.js'),
     },
     config: {
         get: require('./MODULES/CONFIG/get.js'),

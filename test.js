@@ -7,6 +7,10 @@ SLIVE.on("ready", async (data) => {
         width: 1920,
         height: 1080
     })
+
+    SLIVE.controller.set({
+        
+    })
 })
 
 SLIVE.on("chat", (data) => {
