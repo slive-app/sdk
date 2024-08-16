@@ -104,6 +104,10 @@ BACKEND.connect = async function (firstTry) {
                 emit("toolData", message.DATA)
                 break;
 
+            case "OB2OF_EVENT_DATA":
+                emit("eventData", message.DATA)
+                break;
+
             case "OB2OF_DB_GET_RESPONSE": {
                 cache.db[message.DATA.nonce] = message.DATA
                 break;
