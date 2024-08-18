@@ -67,10 +67,6 @@ BACKEND.connect = async function (firstTry) {
                     BACKEND.firstConfig = false
                     emit("ready", cache.sliveConfig)
 
-                    if((cache.sdk.mode.server || cache.sdk.mode.dev) && cache.controller) {
-                        wsDashboard.start()
-                    }
-
                     if (cache.sdk.mode.server) {
                         if (cache.sliveConfig.overlay.selectedId) {
                             bodyInjector.loadModule(cache.sliveConfig.overlay.selectedId)
