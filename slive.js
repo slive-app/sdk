@@ -9,7 +9,7 @@ cache.sdk.version = 1
 cache.gateway.overlay.version = 1
 cache.gateway.overlay.url = "wss://ws.slive.app/slive_app_backend_overlay" + (cache.sdk.beta ? "_beta" : "")
 cache.gateway.dashboard.version = 1
-cache.gateway.dashboard.url = "wss://ws.slive.app/slive_app_backend_panel" + (cache.sdk.beta ? "_beta" : "")
+cache.gateway.dashboard.url = "wss://ws.slive.app/slive_app_backend_dashboard" + (cache.sdk.beta ? "_beta" : "")
 // cache.sdk.local = true // Testing in local Server Environment 
 
 
@@ -68,6 +68,7 @@ const exportSlive = {
     },
     controller: {
         set: require('./MODULES/CONTROLLER/set.js'),
+        update: require('./MODULES/CONTROLLER/update.js'),
     },
     twitch: {
         api: {

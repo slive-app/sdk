@@ -63,7 +63,13 @@ BACKEND_DASHBOARD.connect = async function (firstTry) {
 
                 BACKEND_DASHBOARD.O.send(JSON.stringify({
                     ID: "OF2PB_CONTROLLER_UPDATE",
-                    DATA: cache.controller
+                    DATA: {
+                        module: {
+                            id: cache.localConfig.id,
+                            name: cache.localConfig.name,
+                        },
+                        controller: cache.controller
+                    }
                 }))
                 break;
 
