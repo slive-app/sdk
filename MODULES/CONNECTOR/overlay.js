@@ -2,7 +2,7 @@ const utils = require('../utils.js')
 const emit = require('../emit.js')
 const cache = require('../cache.js')
 const bodyInjector = require('../bodyInjector.js')
-
+const wsDashboard = require('./dashboard.js')
 
 const BACKEND = {
     start: async () => BACKEND.connect(true),
@@ -66,6 +66,10 @@ BACKEND.connect = async function (firstTry) {
                 if (BACKEND.firstConfig) {
                     BACKEND.firstConfig = false
                     emit("ready", cache.sliveConfig)
+
+                    if((cache.sdk.mode.server || cache.sdk.mode.dev) && cache.controller) {
+                        wsDashboard.start()
+                    }
 
                     if (cache.sdk.mode.server) {
                         if (cache.sliveConfig.overlay.selectedId) {
