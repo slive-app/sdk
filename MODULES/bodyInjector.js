@@ -73,6 +73,10 @@ module.exports = {
         document.body.style.opacity = "0";
     },
     loadModule: async (id) => {
+        if(cache.sdk.local) {
+            console.debug(`[sliveApp] [SDK] Wating additional 2 Seconds to load Module`)
+            await utils.waitMs(2000)
+        }
         // generate iframe
         let iframe = document.createElement("iframe")
         iframe.src = `https://${cache.sdk.beta ? "beta." : ""}slive.app/modules/${id}?${Date.now()}`
