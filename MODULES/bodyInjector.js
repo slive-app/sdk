@@ -79,7 +79,7 @@ module.exports = {
         }
         // generate iframe
         let iframe = document.createElement("iframe")
-        iframe.src = `https://${cache.sdk.beta ? "beta." : ""}slive.app/modules/${id}?${Date.now()}`
+        iframe.src = `https://${cache.sdk.beta ? "beta." : ""}slive.app/modules/${id}?${Date.now()}&` + utils.jsonToUrlParams(utils.getUrlVars())
         if(cache.sdk.local) iframe.src = `http://localhost:5500/SDK/overlay/module/index.html?${Date.now()}`
         iframe.style.width = "100%"
         iframe.style.height = "100%"

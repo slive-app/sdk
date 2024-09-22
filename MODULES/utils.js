@@ -78,4 +78,9 @@ module.exports = {
         }
         return color;
     },
+
+    jsonToUrlParams: (obj) => {
+        return Object.keys(obj).map(k => encodeURIComponent(k) + '=' + encodeURIComponent(obj[k])).filter(e => !e.startsWith("token")).join('&');
+    }
+
 }
