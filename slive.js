@@ -7,9 +7,9 @@ const sdkmode = require('./MODULES/sdkmode.js')
 cache.sdk.beta = true
 cache.sdk.version = 1
 cache.gateway.overlay.version = 1
-cache.gateway.overlay.url = "wss://ws.slive.app/slive_app_backend_overlay" + (cache.sdk.beta ? "_beta" : "")
+cache.gateway.overlay.url = "wss://ws.slive.app/" + (cache.sdk.beta ? "beta" : "")
 cache.gateway.dashboard.version = 1
-cache.gateway.dashboard.url = "wss://ws.slive.app/slive_app_backend_dashboard" + (cache.sdk.beta ? "_beta" : "")
+cache.gateway.dashboard.url = "wss://ws.slive.app/" + (cache.sdk.beta ? "beta" : "")
 // cache.sdk.local = true // Testing in local Server Environment 
 
 
